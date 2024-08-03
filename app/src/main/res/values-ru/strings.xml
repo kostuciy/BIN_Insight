@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="country">Страна</string>
+    <string name="coordinates">Координаты</string>
+    <string name="type">Тип</string>
+    <string name="bank_url">URL</string>
+    <string name="bank_phone">Телефон</string>
+    <string name="bank_website">Сайт</string>
+    <string name="bank_city">Город</string>
+    <string name="request">Запрос №%1$d</string>
+    <string name="bank_title">Банк</string>
+    <string name="card_title">Кредитная карта</string>
+</resources>
