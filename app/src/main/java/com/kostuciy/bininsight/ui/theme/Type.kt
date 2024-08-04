@@ -1,4 +1,4 @@
-package com.kostuciy.bininsight.core.ui.theme
+package com.kostuciy.bininsight.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

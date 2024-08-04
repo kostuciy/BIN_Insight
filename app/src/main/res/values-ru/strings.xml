@@ -5,9 +5,22 @@
     <string name="type">Тип</string>
     <string name="bank_url">URL</string>
     <string name="bank_phone">Телефон</string>
-    <string name="bank_website">Сайт</string>
+    <string name="bank_name">Название</string>
     <string name="bank_city">Город</string>
-    <string name="request">Запрос №%1$d</string>
+    <string name="request">Запрос от %1$s</string>
     <string name="bank_title">Банк</string>
     <string name="card_title">Кредитная карта</string>
+    <string name="search_description">Сделать новый запрос</string>
+    <string name="search">Новый запрос</string>
+    <string name="no_card_data">Нет данных о карте</string>
+    <string name="list">Все запросы</string>
+    <string name="list_description">Показать все запросы</string>
+    <string name="error_title">Произошла ошибка</string>
+    <string name="error_server">Ошибка сервера, повторите позже.</string>
+    <string name="code">Код: %1$d</string>
+    <string name="error_client">Произошла ошибка, проверьте введенные данные.</string>
+    <string name="error_network">Проблема с подключением к Интернету, повторите попытку позже.</string>
+    <string name="error_unknown_http">Ошибка HTTP.</string>
+    <string name="error_unknown">Неизвестная ошибка.</string>
+    <string name="dismiss">Закрыть</string>
 </resources>
