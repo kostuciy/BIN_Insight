@@ -14,6 +14,7 @@ sealed class Result<out T> {
 }
 
 enum class ErrorType {
+    REQUEST_LIMIT,
     CLIENT_ERROR,
     SERVER_ERROR,
     HTTP_UNKNOWN_ERROR,

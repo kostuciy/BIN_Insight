@@ -39,15 +39,28 @@ fun Card(
                 Title(resId = R.string.no_card_data)
                 return@Card
             }
+            val dataRowModifier = Modifier.fillMaxWidth().padding(start = 4.dp)
             Title(resId = R.string.card_title)
-            DataRow(resId = R.string.bin, value = cardInfo.bin)
-            DataRow(resId = R.string.coordinates, value = cardInfo.coordinates)
-            DataRow(resId = R.string.type, value = cardInfo.type)
-            Title(resId = R.string.bank_title)
-            DataRow(resId = R.string.bank_name, value = cardInfo.bankInfo.name)
-            DataRow(resId = R.string.bank_url, value = cardInfo.bankInfo.url, onUrlClick)
-            DataRow(resId = R.string.bank_city, value = cardInfo.bankInfo.city)
-            DataRow(resId = R.string.bank_phone, value = cardInfo.bankInfo.phone, onPhoneClick)
+            DataRow(resId = R.string.bin, value = cardInfo.bin.toString(), modifier = dataRowModifier)
+            cardInfo.coordinates?.let {
+                DataRow(resId = R.string.coordinates, value = it, modifier = dataRowModifier)
+            }
+            cardInfo.type?.let {
+                DataRow(resId = R.string.type, value = it, modifier = dataRowModifier)
+            }
+            cardInfo.bankInfo?.let { bankInfo ->
+                Title(resId = R.string.bank_title)
+                DataRow(resId = R.string.bank_name, value = bankInfo.name, modifier = dataRowModifier)
+                bankInfo.url?.let {
+                    DataRow(resId = R.string.bank_url, value = it, onUrlClick, modifier = dataRowModifier)
+                }
+                bankInfo.city?.let {
+                    DataRow(resId = R.string.bank_city, value = it, modifier = dataRowModifier)
+                }
+                bankInfo.phone?.let {
+                    DataRow(resId = R.string.bank_phone, value = it, onPhoneClick, modifier = dataRowModifier)
+                }
+            }
         }
     }
 }

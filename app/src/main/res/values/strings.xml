@@ -13,7 +13,6 @@
     <string name="card_title">Credit card</string>
     <string name="search_description">Make new request</string>
     <string name="search">New request</string>
-    <string name="bin_placeholder" translatable="false">000000 0000000</string>
     <string name="no_card_data">No card data</string>
     <string name="list">All requests</string>
     <string name="list_description">Show all requests</string>
@@ -25,4 +24,5 @@
     <string name="error_unknown_http">HTTP error.</string>
     <string name="error_unknown">Unknown error.</string>
     <string name="dismiss">Close</string>
+    <string name="error_limit">Request limit is reached, try again in an hour.</string>
 </resources>

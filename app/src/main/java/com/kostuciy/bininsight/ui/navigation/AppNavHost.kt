@@ -10,14 +10,14 @@ import androidx.navigation.compose.composable
 import com.kostuciy.bininsight.MainActivity
 import com.kostuciy.bininsight.ui.screens.ListScreen
 import com.kostuciy.bininsight.ui.screens.SearchScreen
-import com.kostuciy.bininsight.viewmodel.MainViewModel
+import com.kostuciy.bininsight.viewmodel.SharedViewModel
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String = NavigationItem.Search.route,
-    viewModel: MainViewModel,
+    sharedViewModel: SharedViewModel,
     activity: MainActivity, // TODO: for intents
 ) {
     NavHost(
@@ -26,25 +26,25 @@ fun AppNavHost(
         startDestination = startDestination,
     ) {
         composable(NavigationItem.List.route) {
-            val uiState by viewModel.state.collectAsState()
+            val uiState by sharedViewModel.state.collectAsState()
             ListScreen(
                 navController,
                 uiState,
-                { }, // TODO: change later
-                { },
-//                { date -> viewModel.deleteRequest(date) }
-                { viewModel.getAllRequests() },
+                onPhoneClick = { }, // TODO: change later
+                onUrlClick = { },
+                onDeleteCard = { date -> sharedViewModel.deleteCard(date) },
+                onDialogDismiss = { sharedViewModel.fetchAllCards() },
             )
         }
         composable(NavigationItem.Search.route) {
-            val uiState by viewModel.state.collectAsState()
+            val uiState by sharedViewModel.state.collectAsState()
             SearchScreen(
                 navController,
                 uiState,
-                { }, // TODO:
-                { },
-                { bin -> viewModel.getRequest(bin) },
-                { viewModel.getAllRequests() },
+                onPhoneClick = { }, // TODO:
+                onUrlClick = { },
+                onSearchClick = { bin -> sharedViewModel.getCard(bin) },
+                onDialogDismiss = { sharedViewModel.fetchAllCards() },
             )
         }
     }

@@ -27,7 +27,7 @@ fun ListScreen(
     uiState: UIState,
     onPhoneClick: (String) -> Unit, // TODO: change if needed
     onUrlClick: (String) -> Unit,
-//    onDeleteCard: (Long) -> Unit
+    onDeleteCard: (Long) -> Unit, // TOOD: add
     onDialogDismiss: () -> Unit,
 ) {
     val listState = rememberLazyListState()

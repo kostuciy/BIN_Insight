@@ -28,7 +28,7 @@ import com.kostuciy.bininsight.R
 
 @Composable
 fun SearchField(
-    onButtonClick: (text: String) -> Unit,
+    onButtonClick: (text: Long) -> Unit,
     buttonEnabled: Boolean,
 ) {
     var text by rememberSaveable { mutableStateOf("") }
@@ -45,7 +45,6 @@ fun SearchField(
             value = text,
             onValueChange = { text = it },
             label = { Text(stringResource(id = R.string.bin)) },
-            placeholder = { Text(stringResource(id = R.string.bin_placeholder)) },
             keyboardOptions =
                 KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -58,7 +57,9 @@ fun SearchField(
         )
 
         FilledTonalIconButton(
-            onClick = { onButtonClick(text) },
+            onClick = {
+                if (text.isNotBlank()) onButtonClick(text.toLong())
+            },
             enabled = buttonEnabled,
         ) {
             Icon(

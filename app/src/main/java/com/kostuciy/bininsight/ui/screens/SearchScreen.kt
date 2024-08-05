@@ -28,7 +28,7 @@ fun SearchScreen(
     uiState: UIState,
     onPhoneClick: (String) -> Unit, // TODO: change if needed
     onUrlClick: (String) -> Unit,
-    onSearchClick: (String) -> Unit,
+    onSearchClick: (Long) -> Unit,
     onDialogDismiss: () -> Unit,
 ) {
     Scaffold(
