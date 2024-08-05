@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.kostuciy.bininsight.MainActivity
 import com.kostuciy.bininsight.ui.screens.ListScreen
 import com.kostuciy.bininsight.ui.screens.SearchScreen
 import com.kostuciy.bininsight.viewmodel.SharedViewModel
@@ -18,7 +17,6 @@ fun AppNavHost(
     navController: NavHostController,
     startDestination: String = NavigationItem.Search.route,
     sharedViewModel: SharedViewModel,
-    activity: MainActivity, // TODO: for intents
 ) {
     NavHost(
         modifier = modifier,
@@ -30,8 +28,6 @@ fun AppNavHost(
             ListScreen(
                 navController,
                 uiState,
-                onPhoneClick = { }, // TODO: change later
-                onUrlClick = { },
                 onDeleteCard = { date -> sharedViewModel.deleteCard(date) },
                 onDialogDismiss = { sharedViewModel.fetchAllCards() },
             )
@@ -41,8 +37,6 @@ fun AppNavHost(
             SearchScreen(
                 navController,
                 uiState,
-                onPhoneClick = { }, // TODO:
-                onUrlClick = { },
                 onSearchClick = { bin -> sharedViewModel.getCard(bin) },
                 onDialogDismiss = { sharedViewModel.fetchAllCards() },
             )

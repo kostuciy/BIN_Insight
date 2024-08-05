@@ -1,5 +1,9 @@
 package com.kostuciy.bininsight.ui.screens
 
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,9 +15,13 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.kostuciy.bininsight.ui.composables.Card
 import com.kostuciy.bininsight.ui.composables.ErrorDialog
@@ -26,17 +34,28 @@ import com.kostuciy.domain.model.UIState
 fun SearchScreen(
     navController: NavHostController,
     uiState: UIState,
-    onPhoneClick: (String) -> Unit, // TODO: change if needed
-    onUrlClick: (String) -> Unit,
     onSearchClick: (Long) -> Unit,
     onDialogDismiss: () -> Unit,
 ) {
+    val launcher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+            onResult = { },
+        )
+    var searched by rememberSaveable { mutableStateOf(false) }
+
     Scaffold(
         floatingActionButton = {
             ListFab {
                 navController.navigate(
                     Screen.LIST.name,
-                ) { launchSingleTop = true }
+                ) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
         },
         floatingActionButtonPosition = FabPosition.End,
@@ -62,11 +81,28 @@ fun SearchScreen(
                     .padding(paddingValues = paddingValues),
         ) {
             Spacer(modifier = Modifier.weight(0.2f))
-            SearchField(onSearchClick, uiState is UIState.Cards)
+            SearchField(
+                onButtonClick = { bin ->
+                    searched = true
+                    onSearchClick(bin)
+                },
+                buttonEnabled = uiState is UIState.Cards,
+            )
             Card(
-                cardInfo = (uiState as? UIState.Cards)?.list?.firstOrNull(), // TODO: change to last if needed
-                onUrlClick = onUrlClick,
-                onPhoneClick = onPhoneClick,
+                cardInfo =
+                    if (searched) {
+                        (uiState as? UIState.Cards)?.list?.lastOrNull()
+                    } else {
+                        null
+                    },
+                onUrlClick = { url ->
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    launcher.launch(intent)
+                },
+                onPhoneClick = { phone ->
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+                    launcher.launch(intent)
+                },
             )
 
             Spacer(modifier = Modifier.weight(0.8f))

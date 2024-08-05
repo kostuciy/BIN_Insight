@@ -28,6 +28,7 @@ class SharedViewModel @Inject constructor(
     val state: StateFlow<UIState> = _state.asStateFlow()
 
     init {
+//        getCard(31023120)
         fetchAllCards()
     }
 
