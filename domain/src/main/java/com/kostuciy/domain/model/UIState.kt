@@ -9,6 +9,6 @@ sealed class UIState {
     ) : UIState()
 
     data class Cards(
-        val list: List<CardInfo> = emptyList(),
+        val list: List<CardInfo> = listOf(),
     ) : UIState()
 }

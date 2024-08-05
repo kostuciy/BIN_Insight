@@ -29,6 +29,16 @@ class RepositoryImpl @Inject constructor(
             val allCards = dao.getAllCards().map { it.toModel() }
             emit(allCards)
         }.asResult()
+//        flow { TODO: remove after testing
+//            repeat(5) {
+//                delay(1000)
+//                val cardInfo = CardInfo(341413413)
+//                dao.saveCard(cardInfo.toEntity())
+//            }
+//
+//            val allCards = dao.getAllCards().map { it.toModel() }
+//            emit(allCards)
+//        }.asResult()
 
     override suspend fun deleteCardInfo(date: Long): Flow<Result<List<CardInfo>>> =
         flow {

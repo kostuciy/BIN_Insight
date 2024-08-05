@@ -31,7 +31,6 @@ class MainActivity : ComponentActivity() {
                     AppNavHost(
                         navController = rememberNavController(),
                         sharedViewModel = viewModel,
-                        activity = this,
                     )
                 }
             }

@@ -9,8 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,40 +27,59 @@ import com.kostuciy.bininsight.R
 import com.kostuciy.bininsight.utils.AppUtils
 import com.kostuciy.domain.model.CardInfo
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InfoCard(
     cardInfo: CardInfo,
     onUrlClick: (String) -> Unit,
     onPhoneClick: (String) -> Unit,
+    onDeleteCard: (Long) -> Unit,
+    modifier: Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
-
-    ElevatedCard(
-        shape = RoundedCornerShape(16.dp),
-        onClick = { expanded = !expanded },
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-                .animateContentSize(
-                    animationSpec =
-                        tween(
-                            durationMillis = 240,
-                            easing = LinearOutSlowInEasing,
-                        ),
-                ),
+    val dismissState =
+        rememberSwipeToDismissBoxState(
+            confirmValueChange = {
+                if (it == SwipeToDismissBoxValue.EndToStart) {
+                    onDeleteCard(cardInfo.date)
+                    return@rememberSwipeToDismissBoxState true
+                }
+                return@rememberSwipeToDismissBoxState false
+            },
+            positionalThreshold = { it * .15f },
+        )
+    SwipeToDismissBox(
+        state = dismissState,
+        backgroundContent = { DismissBackGround(dismissState = dismissState) },
+        modifier = modifier,
     ) {
-        Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ElevatedCard(
+            shape = RoundedCornerShape(16.dp),
+            onClick = { expanded = !expanded },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+                    .animateContentSize(
+                        animationSpec =
+                            tween(
+                                durationMillis = 240,
+                                easing = LinearOutSlowInEasing,
+                            ),
+                    ),
         ) {
-            ListCardHeader(date = cardInfo.date)
-            if (expanded) {
-                ListCardBody(
-                    cardInfo,
-                    onUrlClick,
-                    onPhoneClick,
-                )
+            Column(
+                modifier = Modifier.padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                ListCardHeader(date = cardInfo.date)
+                if (expanded) {
+                    ListCardBody(
+                        cardInfo,
+                        onUrlClick,
+                        onPhoneClick,
+                    )
+                }
             }
         }
     }

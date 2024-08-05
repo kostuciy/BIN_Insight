@@ -9,5 +9,5 @@ import javax.inject.Inject
 class DeleteCardInfoUseCase @Inject constructor(
     private val repository: Repository,
 ) : UseCase<Long, Flow<Result<List<CardInfo>>>>(repository) {
-    override suspend fun execute(date: Long) = repository.getCardInfo(date)
+    override suspend fun execute(date: Long) = repository.deleteCardInfo(date)
 }

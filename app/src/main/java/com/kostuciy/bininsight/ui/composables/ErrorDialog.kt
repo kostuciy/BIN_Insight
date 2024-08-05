@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.kostuciy.bininsight.R
 import com.kostuciy.domain.model.UIState
 
@@ -45,13 +44,4 @@ fun ErrorDialog(
             }
         },
     )
-}
-
-@Composable
-@Preview
-fun fsdofspd() {
-    ErrorDialog(
-        errorState = UIState.Error(R.string.error_unknown, 111),
-    ) {
-    }
 }
