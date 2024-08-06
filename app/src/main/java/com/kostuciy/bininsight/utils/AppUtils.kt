@@ -25,11 +25,9 @@ object AppUtils {
         scheme: String?,
         brand: String?,
     ): String? =
-        if (brand == null && scheme == null) {
-            null
-        } else {
-            val first = if (scheme == null) "" else "${scheme!!.uppercase()}, "
-            val second = brand ?: ""
-            "$first$second"
+        when {
+            scheme == null && brand == null -> null
+            scheme == null || brand == null -> brand ?: scheme?.uppercase()
+            else -> "${scheme.uppercase()}, $brand"
         }
 }
