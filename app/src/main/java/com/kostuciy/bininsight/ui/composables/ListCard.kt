@@ -33,6 +33,7 @@ fun InfoCard(
     cardInfo: CardInfo,
     onUrlClick: (String) -> Unit,
     onPhoneClick: (String) -> Unit,
+    onCoordinatesClick: (Pair<Float, Float>) -> Unit,
     onDeleteCard: (Long) -> Unit,
     modifier: Modifier,
 ) {
@@ -78,6 +79,7 @@ fun InfoCard(
                         cardInfo,
                         onUrlClick,
                         onPhoneClick,
+                        onCoordinatesClick,
                     )
                 }
             }
@@ -100,14 +102,22 @@ fun ListCardBody(
     cardInfo: CardInfo,
     onUrlClick: (String) -> Unit,
     onPhoneClick: (String) -> Unit,
+    onCoordinatesClick: (Pair<Float, Float>) -> Unit,
 ) {
     val dataRowModifier = Modifier.fillMaxWidth().padding(start = 4.dp)
     Title(resId = R.string.card_title)
     DataRow(resId = R.string.bin, value = cardInfo.bin.toString(), modifier = dataRowModifier)
-    cardInfo.coordinates?.let {
-        DataRow(resId = R.string.coordinates, value = it, modifier = dataRowModifier)
+    cardInfo.coordinates?.let { coordinates ->
+        val coordinatesString = AppUtils.formatCoordinates(coordinates.first, coordinates.second)
+        DataRow(
+            resId = R.string.coordinates,
+            value = coordinatesString,
+            modifier = dataRowModifier,
+            onClick = { onCoordinatesClick(coordinates) },
+        )
     }
-    cardInfo.type?.let {
+    val type = AppUtils.formatCardType(cardInfo.scheme, cardInfo.brand)
+    type?.let {
         DataRow(resId = R.string.type, value = it, modifier = dataRowModifier)
     }
     cardInfo.bankInfo?.let { bankInfo ->

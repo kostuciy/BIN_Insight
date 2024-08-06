@@ -5,33 +5,30 @@ import com.kostuciy.domain.model.CardInfo
 
 data class CardResponse(
     val brand: String? = null,
+    val scheme: String? = null,
     val country: CountryResponse? = null,
     val bank: BankResponse? = null,
 ) {
     fun toModel(bin: Long): CardInfo {
         val coordinates =
-            country?.let {
-                "${it.latitude}\u00B0, ${it.longitude}\u00B0"
+            if (country?.latitude == null || country.longitude == null) {
+                null
+            } else {
+                Pair(country.latitude, country.longitude)
             }
         val bankInfo =
             bank?.let {
                 BankInfo(it.name, it.phone, it.url, it.city)
             }
 
-        return CardInfo(
-            bin,
-            country?.name,
-            coordinates,
-            brand,
-            bankInfo,
-        )
+        return CardInfo(bin, country?.name, coordinates, scheme, brand, bankInfo)
     }
 }
 
 data class CountryResponse(
     val name: String,
-    val latitude: Int,
-    val longitude: Int,
+    val latitude: Float? = null,
+    val longitude: Float? = null,
 )
 
 data class BankResponse(

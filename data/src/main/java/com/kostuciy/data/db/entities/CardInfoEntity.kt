@@ -10,10 +10,21 @@ import com.kostuciy.domain.model.CardInfo
 class CardInfoEntity(
     val bin: Long,
     val country: String? = null,
-    val coordinates: String? = null,
-    val type: String? = null,
+    val latitude: Float? = null,
+    val longitude: Float? = null,
+    val scheme: String? = null,
+    val brand: String? = null,
     @Embedded val bankInfo: BankInfo? = null,
     @PrimaryKey val date: Long,
 ) {
-    fun toModel() = CardInfo(bin, country, coordinates, type, bankInfo, date)
+    fun toModel(): CardInfo {
+        val coordinates =
+            if (latitude == null || longitude == null) {
+                null
+            } else {
+                Pair(latitude, longitude)
+            }
+
+        return CardInfo(bin, country, coordinates, scheme, brand, bankInfo, date)
+    }
 }
