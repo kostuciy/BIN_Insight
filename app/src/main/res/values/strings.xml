@@ -26,4 +26,5 @@
     <string name="dismiss">Close</string>
     <string name="error_limit">Request limit is reached, try again in an hour.</string>
     <string name="delete">Delete requets from history.</string>
+    <string name="enter_bin">Enter BIN</string>
 </resources>

@@ -40,10 +40,12 @@ fun DismissBackGround(dismissState: SwipeToDismissBoxState) {
                 .background(color),
         contentAlignment = Alignment.CenterEnd,
     ) {
-        Icon(
-            imageVector = Icons.Default.Delete,
-            contentDescription = stringResource(id = R.string.delete),
-            modifier = Modifier.padding(8.dp),
-        )
+        if (dismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = stringResource(id = R.string.delete),
+                modifier = Modifier.padding(8.dp),
+            )
+        }
     }
 }

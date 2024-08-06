@@ -91,7 +91,7 @@ fun SearchScreen(
             Card(
                 cardInfo =
                     if (searched) {
-                        (uiState as? UIState.Cards)?.list?.lastOrNull()
+                        (uiState as? UIState.Cards)?.list?.firstOrNull()
                     } else {
                         null
                     },

@@ -7,7 +7,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -15,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,6 +33,7 @@ fun SearchField(
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
+    var isIncorrectInput by remember { mutableStateOf(false) }
 
     Row(
         modifier =
@@ -54,11 +55,22 @@ fun SearchField(
                 KeyboardActions(
                     onDone = { keyboardController?.hide() },
                 ),
+            supportingText = {
+                if (isIncorrectInput) {
+                    Text(text = stringResource(id = R.string.enter_bin))
+                }
+            },
+            isError = isIncorrectInput,
         )
 
         FilledTonalIconButton(
             onClick = {
-                if (text.isNotBlank()) onButtonClick(text.toLong())
+                if (text.isBlank()) {
+                    isIncorrectInput = true
+                } else {
+                    isIncorrectInput = false
+                    onButtonClick(text.toLong())
+                }
             },
             enabled = buttonEnabled,
         ) {

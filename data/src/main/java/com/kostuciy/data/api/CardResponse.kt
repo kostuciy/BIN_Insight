@@ -4,7 +4,7 @@ import com.kostuciy.domain.model.BankInfo
 import com.kostuciy.domain.model.CardInfo
 
 data class CardResponse(
-    val scheme: String? = null,
+    val brand: String? = null,
     val country: CountryResponse? = null,
     val bank: BankResponse? = null,
 ) {
@@ -22,7 +22,7 @@ data class CardResponse(
             bin,
             country?.name,
             coordinates,
-            scheme,
+            brand,
             bankInfo,
         )
     }

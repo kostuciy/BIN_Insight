@@ -46,7 +46,7 @@ fun InfoCard(
                 }
                 return@rememberSwipeToDismissBoxState false
             },
-            positionalThreshold = { it * .15f },
+            positionalThreshold = { it * .25f },
         )
     SwipeToDismissBox(
         state = dismissState,
