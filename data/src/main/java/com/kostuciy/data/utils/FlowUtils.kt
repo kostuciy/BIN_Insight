@@ -1,6 +1,5 @@
 package com.kostuciy.data.utils
 
-import android.util.Log
 import com.kostuciy.domain.model.ErrorType
 import com.kostuciy.domain.model.Result
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +20,6 @@ object FlowUtils {
 fun handleError(exception: Throwable): Result.Error {
     val type: ErrorType
     var code: Int? = null
-    Log.d("TAGTAG", "$exception __ ${exception.message}")
     when (exception) {
         is HttpException -> {
             code = exception.code()

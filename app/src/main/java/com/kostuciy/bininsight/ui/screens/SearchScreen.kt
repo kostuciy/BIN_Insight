@@ -29,6 +29,7 @@ import com.kostuciy.bininsight.ui.composables.ListFab
 import com.kostuciy.bininsight.ui.composables.SearchField
 import com.kostuciy.bininsight.ui.navigation.Screen
 import com.kostuciy.domain.model.UIState
+import java.util.Locale
 
 @Composable
 fun SearchScreen(
@@ -101,6 +102,17 @@ fun SearchScreen(
                 },
                 onPhoneClick = { phone ->
                     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+                    launcher.launch(intent)
+                },
+                onCoordinatesClick = { coordinates ->
+                    val uri =
+                        String.format(
+                            Locale.ENGLISH,
+                            "geo:%f,%f",
+                            coordinates.first,
+                            coordinates.second,
+                        )
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
                     launcher.launch(intent)
                 },
             )
